@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+# Using google cloud vision api
 gem "google-cloud-vision"
 
 # Using mastodon-api
