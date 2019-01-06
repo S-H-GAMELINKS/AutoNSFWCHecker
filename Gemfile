@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Using google cloud vision api
-gem "google-cloud-vision"
+gem "google-cloud-vision", '0.31.0'
 gem "dotenv"
 
 # Using mastodon-api
