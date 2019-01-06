@@ -14,8 +14,6 @@ vision = Google::Cloud::Vision.new project: env["project_id"].to_s
 stream = Mastodon::Streaming::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
 client = Mastodon::REST::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
 
-response = vision.image(filename).safe_search
-
 # Streaming for Local TimeLine
 stream.firehose() do |toot|
     puts toot
