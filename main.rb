@@ -16,5 +16,8 @@ client = Mastodon::REST::Client.new(base_url: ENV["MASTODON_URL"], bearer_token:
 
 # Streaming for Local TimeLine
 stream.firehose() do |toot|
-    puts toot
+    toot.media_attachments.each do |media|
+        response = vision.image(media.url).safe_search
+        puts response
+    end
 end
