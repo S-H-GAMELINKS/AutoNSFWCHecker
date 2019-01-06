@@ -17,6 +17,7 @@ GEM
     buftok (0.2.0)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.6.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     google-cloud-vision (0.32.2)
@@ -74,6 +75,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  dotenv
   google-cloud-vision
   mastodon-api!
 
