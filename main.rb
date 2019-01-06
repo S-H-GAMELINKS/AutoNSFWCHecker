@@ -15,18 +15,16 @@ stream = Mastodon::Streaming::Client.new(base_url: ENV["MASTODON_URL"], bearer_t
 client = Mastodon::REST::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
 
 # Streaming for Local TimeLine
-stream.firehose() do |toot|
-    if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ 
-        toot.media_attachments.each do |media|
-            response = vision.image(media.url).safe_search
-
-            if response.adult? 
-                client.create_status("@#{toot.account.acct}@#{ENV["MASTODON_URL"].gsub!(/https:\/\//, '')} えっちい画像なのでNSFWをつけてください……")
-            elsif response.violence?
-                client.create_status("@#{toot.account.acct}@#{ENV["MASTODON_URL"].gsub!(/https:\/\//, '')} 暴力的な画像なのでNSFWをつけてください……")
-            elsif response.medical?
-                client.create_status("@#{toot.account.acct}@#{ENV["MASTODON_URL"].gsub!(/https:\/\//, '')} 医療系な画像なのでNSFWをつけてください……")
-            end
+stream.stream('public/local') do |toot|
+    toot.media_attachments.each do |media|
+        response = vision.image(media.url).safe_search
+        puts "Check!"
+        if response.adult? 
+            client.create_status("@#{toot.account.acct}@#{ENV["MASTODON_DOMAIN"]} えっちい画像なのでNSFWをつけてください……")
+        elsif response.violence?
+            client.create_status("@#{toot.account.acct}@#{ENV["MASTODON_DOMAIN"]} 暴力的な画像なのでNSFWをつけてください……")
+        elsif response.medical?
+            client.create_status("@#{toot.account.acct}@#{ENV["MASTODON_DOMAIN"]} 医療系な画像なのでNSFWをつけてください……")
         end
     end
 end
